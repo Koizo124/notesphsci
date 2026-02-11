@@ -1,0 +1,93 @@
+<body>
+
+<div class="container">
+    <img src="cat.gif" alt="Cute Cat">
+    <h1>Will you be my Valentine?</h1>
+
+    <!-- Message that changes -->
+    <p id="message"></p>
+
+    <!-- Buttons -->
+    <div class="buttons">
+        <button id="yesBtn" onclick="sayYes()">Yes</button>
+        <button id="noBtn" onclick="sayNo()">No</button>
+    </div>
+</div> <!-- END container -->
+
+<!-- AUDIO TAG GOES HERE -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<!-- SCRIPT TAG -->
+<script>
+let noClickCount = 0;
+
+const messages = [
+    "Are you sure?",
+    "C'mon Ambeng. :((",
+    "Pretty Please Pretty Ladyy?.",
+    "That hurts.",
+    "Last chance.",
+    "This is getting serious."
+];
+
+function sayNo() {
+    const message = document.getElementById("message");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    if (noClickCount < messages.length) {
+        message.textContent = messages[noClickCount];
+    } else {
+        message.textContent = "The only correct answer is yes.";
+    }
+
+    noClickCount++;
+
+    let noSize = 16 - (noClickCount * 2);
+    if (noSize < 8) noSize = 8;
+    noBtn.style.fontSize = noSize + "px";
+
+    let yesSize = 16 + (noClickCount * 4);
+    yesBtn.style.fontSize = yesSize + "px";
+}
+
+function fadeInMusic() {
+    const music = document.getElementById("bgMusic");
+    music.volume = 0;
+    music.play();
+
+    let volume = 0;
+    const fadeInterval = setInterval(() => {
+        if (volume < 1) {
+            volume += 0.05;
+            music.volume = volume;
+        } else {
+            clearInterval(fadeInterval);
+        }
+    }, 200);
+}
+
+function sayYes() {
+    fadeInMusic();
+
+    document.body.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(135deg,#ff758c,#ff7eb3);
+            color:white;
+            font-family:Arial;
+            text-align:center;
+            flex-direction:column;
+        ">
+            <h1>Thank you.</h1>
+            <p>You just made me very happy.</p>
+            <p>Happy Valentine's Day.</p>
+        </div>
+    `;
+}
+</script>
+
+</body>
