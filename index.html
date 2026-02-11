@@ -88,16 +88,17 @@ button {
     </div>
 </div>
 
-<!-- Mobile-safe audio -->
-<audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
+<!-- Audio autoplay muted -->
+<audio id="bgMusic" src="music.mp3" autoplay loop muted></audio>
 
 <script>
 let noClickCount = 0;
+let musicUnmuted = false;
 
 const messages = [
     "Are you sure?",
-    "C'mon, Ambeng. :((.",
-    "Pretty please? PLEASEE PRETTYY LADYY",
+    "C'mon, think again.",
+    "Pretty please?",
     "That hurts.",
     "Last chance.",
     "This is getting serious."
@@ -126,28 +127,38 @@ function sayNo() {
     yesBtn.style.fontSize = yesSize + "px";
 }
 
-// Mobile-safe fade-in music
-function fadeInMusic() {
-    const music = document.getElementById("bgMusic");
-    music.volume = 0;
+function sayYes() {
+    document.body.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(135deg,#ff758c,#ff7eb3);
+            color:white;
+            font-family:Arial;
+            text-align:center;
+            flex-direction:column;
+        ">
+            <h1>Thank you.</h1>
+            <p>You just made me very happy.</p>
+            <p>Happy Valentine's Day.</p>
+        </div>
+    `;
+}
 
-    const playPromise = music.play();
-    if (playPromise !== undefined) {
-        playPromise.then(() => {
-            // Music started successfully, fade in
-            let volume = 0;
-            const fadeInterval = setInterval(() => {
-                if (volume < 1) {
-                    volume += 0.05;
-                    music.volume = volume;
-                } else {
-                    clearInterval(fadeInterval);
-                }
-            }, 200);
-        }).catch(error => {
-            console.log("Audio play failed:", error);
-        });
+// Unmute music on first tap anywhere
+document.body.addEventListener('click', function() {
+    if (!musicUnmuted) {
+        const music = document.getElementById("bgMusic");
+        music.muted = false;
+        musicUnmuted = true;
     }
+}, { once: true }); // runs only on the first tap
+</script>
+
+</body>
+</html>    }
 }
 
 function sayYes() {
