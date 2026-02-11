@@ -1,30 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    max-width: 400px;
+}
+
+img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+p#message {
+    min-height: 30px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 16px;
+}
+
+#yesBtn {
+    background: white;
+    color: #ff4d6d;
+}
+
+#noBtn {
+    background: #333;
+    color: white;
+}
+</style>
+</head>
+
 <body>
 
 <div class="container">
     <img src="cat.gif" alt="Cute Cat">
     <h1>Will you be my Valentine?</h1>
-
-    <!-- Message that changes -->
     <p id="message"></p>
-
-    <!-- Buttons -->
     <div class="buttons">
         <button id="yesBtn" onclick="sayYes()">Yes</button>
         <button id="noBtn" onclick="sayNo()">No</button>
     </div>
-</div> <!-- END container -->
+</div>
 
-<!-- AUDIO TAG GOES HERE -->
+<!-- Audio placed here -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<!-- SCRIPT TAG -->
 <script>
 let noClickCount = 0;
 
 const messages = [
     "Are you sure?",
-    "C'mon Ambeng. :((",
-    "Pretty Please Pretty Ladyy?.",
+    "C'mon, think again.",
+    "Pretty please?",
     "That hurts.",
     "Last chance.",
     "This is getting serious."
@@ -43,10 +116,12 @@ function sayNo() {
 
     noClickCount++;
 
+    // Shrink No button
     let noSize = 16 - (noClickCount * 2);
     if (noSize < 8) noSize = 8;
     noBtn.style.fontSize = noSize + "px";
 
+    // Enlarge Yes button
     let yesSize = 16 + (noClickCount * 4);
     yesBtn.style.fontSize = yesSize + "px";
 }
@@ -91,3 +166,4 @@ function sayYes() {
 </script>
 
 </body>
+</html>
